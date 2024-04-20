@@ -26,6 +26,7 @@ builder.Services.AddDbContext<StoreDbContext>(options =>
 
 
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<CategoryService>();
 
 var app = builder.Build();
 
@@ -41,7 +42,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     var context = services.GetRequiredService<StoreDbContext>();
-    context.Database.EnsureCreated();
+    context.Database.Migrate();
     // DbInitializer.Initialize(context);
 }
 app.UseCors("CorsPolicy");
