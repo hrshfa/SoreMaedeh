@@ -29,6 +29,12 @@ namespace IbulakStoreServer.Controllers
             var result = await _productService.GetsAsync();
             return Ok(result);
         }
+        [HttpGet("GetsByCategory")]
+        public async Task<IActionResult> GetsByCategory(int categoryId)
+        {
+            var result = await _productService.GetsByCategoryAsync(categoryId);
+            return Ok(result);
+        }
         [HttpPost]
         public async Task<IActionResult> Add(Product product)
         {

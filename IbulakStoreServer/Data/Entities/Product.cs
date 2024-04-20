@@ -14,6 +14,6 @@ namespace IbulakStoreServer.Data.Entities
         public DateTime CreatedAt { get; set; }
         public string ImageFileName { get; set;}
 
-        public virtual Category Category { get; set; }
+        public virtual Category Category { get; set; } = default!;
     }
 }
