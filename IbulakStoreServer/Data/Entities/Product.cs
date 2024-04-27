@@ -15,5 +15,7 @@ namespace IbulakStoreServer.Data.Entities
         public string ImageFileName { get; set;}
 
         public virtual Category Category { get; set; } = default!;
+        public virtual ICollection<Basket> Baskets { get; set; } = new HashSet<Basket>();
+        public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
     }
 }
