@@ -1,6 +1,7 @@
 ﻿using IbulakStoreServer.Data.Domain;
 using IbulakStoreServer.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Shared.Models.Order;
 
 namespace IbulakStoreServer.Services
 {
@@ -38,6 +39,19 @@ namespace IbulakStoreServer.Services
         public async Task AddAsync(Order order)
         {
             _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+        }
+        public async Task AddRangeAsync(List<OrderAddRequestDto> models)
+        {
+            var orders = models.Select(orderDto=>new Order
+            {
+                Count = orderDto.Count,
+                Price=orderDto.Price,
+                ProductId=orderDto.ProductId,
+                UserId = orderDto.UserId,
+                CreatedAt=DateTime.Now
+            });
+            _context.Orders.AddRange(orders);
             await _context.SaveChangesAsync();
         }
         public async Task EditAsync(Order order)

@@ -1,6 +1,7 @@
 ﻿using IbulakStoreServer.Data.Domain;
 using IbulakStoreServer.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Shared.Models.Bascket;
 
 namespace IbulakStoreServer.Services
 {
@@ -35,8 +36,14 @@ namespace IbulakStoreServer.Services
             List<Basket> baskets = await _context.Baskets.Where(basket => basket.UserId == userId).ToListAsync();
             return basket;
         }
-        public async Task AddAsync(Basket basket)
+        public async Task AddAsync(BascketAddRequestDto model)
         {
+            Basket basket = new Basket
+            {
+                UserId = model.UserId,
+                Count = model.Count,
+                ProductId = model.ProductId,
+            };
             _context.Baskets.Add(basket);
             await _context.SaveChangesAsync();
         }
