@@ -16,7 +16,7 @@ namespace IbulakStoreServer.Controllers
         {
             _environment = environment;
         }
-        //  2024/4/27/about-mission.jpg
+        //  2024/4/27/about-mission-3.jpg
 
         [HttpPost]
         [DisableRequestSizeLimit]

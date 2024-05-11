@@ -3,6 +3,7 @@ using IbulakStoreServer.Data.Entities;
 using IbulakStoreServer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Models.Products;
 
 namespace IbulakStoreServer.Controllers
 {
@@ -16,7 +17,6 @@ namespace IbulakStoreServer.Controllers
             _productService = productService;
         }
 
-
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -27,6 +27,12 @@ namespace IbulakStoreServer.Controllers
         public async Task<IActionResult> Gets()
         {
             var result = await _productService.GetsAsync();
+            return Ok(result);
+        }
+        [HttpGet("Search")]
+        public async Task<IActionResult> Search([FromQuery]SearchRequestDto model)
+        {
+            var result = await _productService.SearchAsync(model);
             return Ok(result);
         }
         [HttpGet("GetsByCategory")]
