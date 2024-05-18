@@ -65,5 +65,11 @@ namespace IbulakStoreServer.Controllers
             await _orderService.DeleteAsync(id);
             return Ok();
         }
+        [HttpGet("OrdersReportByProduct")]
+        public async Task<IActionResult> OrdersReportByProduct([FromQuery] OrderReportByProductRequestDto model)
+        {
+            var result = await _orderService.OrdersReportByProductAsync(model);
+            return Ok(result);
+        }
     }
 }
