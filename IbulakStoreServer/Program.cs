@@ -1,6 +1,9 @@
 using IbulakStoreServer.Data.Domain;
+using IbulakStoreServer.Data.Entities;
 using IbulakStoreServer.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -18,8 +21,20 @@ builder.Services.AddCors(options =>
                         .AllowCredentials()
                         .Build());
 });
+builder.Services.AddAuthorization();
 builder.Services.AddDbContext<StoreDbContext>(options =>
   options.UseSqlite(builder.Configuration.GetConnectionString("WebApiDatabase")));
+builder.Services
+    .AddIdentityApiEndpoints<AppUser>(options=>
+    {
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireDigit = false;
+        options.Password.RequiredLength = 6;
+    })
+        .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<StoreDbContext>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<UserService>();
@@ -43,6 +58,7 @@ using (var scope = app.Services.CreateScope())
     context.Database.Migrate();
     // DbInitializer.Initialize(context);
 }
+
 app.UseStaticFiles();
 app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
@@ -50,5 +66,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+//app.MapGroup("/account").MapIdentityApi<AppUser>();
 
 app.Run();

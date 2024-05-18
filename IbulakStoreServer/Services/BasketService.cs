@@ -31,7 +31,7 @@ namespace IbulakStoreServer.Services
             List<Basket> baskets = await _context.Baskets.Where(basket => basket.ProductId == ProductId).ToListAsync();
             return basket;
         }
-        public async Task<List<Basket>> GetsByUserAsync(int userId)
+        public async Task<List<Basket>> GetsByUserAsync(string userId)
         {
             List<Basket> baskets = await _context.Baskets.Where(basket => basket.UserId == userId).ToListAsync();
             return basket;

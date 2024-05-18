@@ -3,6 +3,7 @@ using System;
 using IbulakStoreServer.Data.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IbulakStoreServer.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    partial class StoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240518071021_AddAdminSeedData")]
+    partial class AddAdminSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
@@ -35,10 +38,6 @@ namespace IbulakStoreServer.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
@@ -89,14 +88,13 @@ namespace IbulakStoreServer.Migrations
                         {
                             Id = "2426167f-842e-4933-ae72-d8dfe34abf78",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f50d6839-02b7-4d79-99ba-2cf0d4362d79",
+                            ConcurrencyStamp = "567f399d-3463-4ec8-9ae4-41dc0c606dd0",
                             Email = "hr.shahshahani@gmail.com",
                             EmailConfirmed = true,
-                            FullName = "حمیدرضا شهشهانی",
                             LockoutEnabled = false,
                             NormalizedEmail = "hr.shahshahani@gmail.com",
                             NormalizedUserName = "09119660028",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPwJHgfaLbeJiwVcvm8YQsgSDkMRHyvbp7iO4yVVyYURsuU4nIPKKe4ryo8BovCLpA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOp8qwungFjlKfBzlwX1efUfu7ovI29vWt18CXWz4BgICFdUqLp4kIr6+3JyBpYtpg==",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -116,11 +114,7 @@ namespace IbulakStoreServer.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("UserId1")
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -128,8 +122,6 @@ namespace IbulakStoreServer.Migrations
                     b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Baskets");
                 });
@@ -273,7 +265,7 @@ namespace IbulakStoreServer.Migrations
                         },
                         new
                         {
-                            Id = "ab4b865d-8020-47e7-b12d-776c43e84360",
+                            Id = "9de56b3f-69f1-4fac-ad77-56789a422faa",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -396,15 +388,11 @@ namespace IbulakStoreServer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("IbulakStoreServer.Data.Entities.AppUser", "User")
-                        .WithMany()
+                    b.HasOne("IbulakStoreServer.Data.Entities.User", "User")
+                        .WithMany("Baskets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("IbulakStoreServer.Data.Entities.User", null)
-                        .WithMany("Baskets")
-                        .HasForeignKey("UserId1");
 
                     b.Navigation("Product");
 

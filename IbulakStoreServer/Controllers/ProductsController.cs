@@ -1,6 +1,7 @@
 ﻿using IbulakStoreServer.Data.Domain;
 using IbulakStoreServer.Data.Entities;
 using IbulakStoreServer.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Products;
@@ -16,6 +17,7 @@ namespace IbulakStoreServer.Controllers
         {
             _productService = productService;
         }
+        [Authorize(Roles ="User")]
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
@@ -42,6 +44,7 @@ namespace IbulakStoreServer.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Add(Product product)
         {
